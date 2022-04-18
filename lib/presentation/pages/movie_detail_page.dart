@@ -76,7 +76,9 @@ class DetailContent extends StatelessWidget {
           placeholder: (context, url) => Center(
             child: CircularProgressIndicator(),
           ),
+          // coverage:ignore-start
           errorWidget: (context, url, error) => Icon(Icons.error),
+          // coverage:ignore-end
         ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
@@ -225,9 +227,11 @@ class DetailContent extends StatelessWidget {
                                                   child:
                                                       CircularProgressIndicator(),
                                                 ),
+                                                // coverage: ignore-start
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Icon(Icons.error),
+                                                // coverage: ignore-end
                                               ),
                                             ),
                                           ),

@@ -1,3 +1,5 @@
+import 'package:ditonton/data/models/genre_model.dart';
+import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
@@ -81,3 +83,28 @@ final testMovieMap = {
   'posterPath': 'posterPath',
   'title': 'title',
 };
+
+final tGenreModel = GenreModel(id: 1, name: 'Action');
+
+final testMovieDetailResponse = MovieDetailResponse(
+    adult: false,
+    backdropPath: 'backdropPath',
+    genres: [GenreModel(id: 1, name: 'Action')],
+    id: 1,
+    originalTitle: 'originalTitle',
+    overview: 'overview',
+    posterPath: 'posterPath',
+    releaseDate: 'releaseDate',
+    runtime: 120,
+    title: 'title',
+    voteAverage: 1,
+    voteCount: 1,
+    budget: 1,
+    homepage: 'testHomepage',
+    originalLanguage: 'test',
+    popularity: 12,
+    revenue: 1,
+    tagline: 'testTagline',
+    video: true,
+    status: 'testStatus',
+    imdbId: 'imdbId');

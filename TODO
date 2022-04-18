@@ -1,0 +1,29 @@
+## TV Series list (now airing, popular, top rated)
+  - poster path
+  - title
+  - overview/description
+
+## TV Series Detail 
+  - poster path
+  - name
+  - genre
+  - length
+  - vote_average
+  - overview/description
+  - last episode on air > episode number, season number
+  - recommendation NEW API ACALL
+
+
+
+
+
+## Structure
+                   presentation/pages
+                            ⬇️
+                  presentation/provider
+                            ⬇️
+                    domain/usecases
+                            ⬇️
+domain/entities  →  data/repositories ← domain/repository
+                            ⬇️
+data/models     →    data/datasource ← data/datasource/db

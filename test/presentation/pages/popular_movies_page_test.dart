@@ -8,6 +8,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
+import '../../dummy_data/dummy_objects.dart';
 import 'popular_movies_page_test.mocks.dart';
 
 @GenerateMocks([PopularMoviesNotifier])
@@ -62,5 +63,16 @@ void main() {
     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
 
     expect(textFinder, findsOneWidget);
+  });
+
+  testWidgets('should display list view if request state is loaded',
+      (WidgetTester tester) async {
+    when(mockNotifier.state).thenReturn(RequestState.Loaded);
+    when(mockNotifier.message).thenReturn('Error message');
+    when(mockNotifier.movies).thenReturn(<Movie>[testMovie]);
+
+    await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+
+    expect(find.byType(ListView), findsOneWidget);
   });
 }

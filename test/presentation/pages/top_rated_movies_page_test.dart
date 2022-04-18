@@ -43,12 +43,27 @@ void main() {
   testWidgets('Page should display when data is loaded',
       (WidgetTester tester) async {
     when(mockNotifier.state).thenReturn(RequestState.Loaded);
-    when(mockNotifier.movies).thenReturn(<Movie>[]);
+    when(mockNotifier.movies).thenReturn(<Movie>[
+      Movie(
+        adult: false,
+        backdropPath: 'backdropPath',
+        genreIds: [1, 2, 3],
+        id: 1,
+        originalTitle: 'originalTitle',
+        overview: 'overview',
+        popularity: 1,
+        posterPath: 'posterPath',
+        releaseDate: 'releaseDate',
+        title: 'title',
+        video: false,
+        voteAverage: 1,
+        voteCount: 1,
+      )
+    ]);
 
     final listViewFinder = find.byType(ListView);
 
     await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
-
     expect(listViewFinder, findsOneWidget);
   });
 

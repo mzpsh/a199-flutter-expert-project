@@ -232,5 +232,17 @@ void main() {
       expect(provider.message, 'Server Failure');
       expect(listenerCallCount, 2);
     });
+
+    test('should show error message on removing from watchlist failure',
+        () async {
+      when(mockRemoveWatchlist.execute(testMovieDetail))
+          .thenAnswer((realInvocation) async => Left(ServerFailure('')));
+      when(mockGetWatchlistStatus.execute(1))
+          .thenAnswer((realInvocation) async => false);
+
+      await provider.removeFromWatchlist(testMovieDetail);
+
+      expect(provider.message, '');
+    });
   });
 }

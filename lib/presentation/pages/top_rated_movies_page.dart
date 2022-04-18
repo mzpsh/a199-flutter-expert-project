@@ -20,6 +20,11 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
             .fetchTopRatedMovies());
   }
 
+  Function _movieCardBuilder = (context, index, TopRatedMoviesNotifier data) {
+    final movie = data.movies[index];
+    return MovieCard(movie);
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +41,8 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             } else if (data.state == RequestState.Loaded) {
               return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = data.movies[index];
-                  return MovieCard(movie);
-                },
+                itemBuilder: (context, index) =>
+                    _movieCardBuilder(context, index, data),
                 itemCount: data.movies.length,
               );
             } else {
