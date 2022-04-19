@@ -3,10 +3,10 @@ import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
+import 'package:ditonton/data/datasources/tvseries_local_data_source.dart';
 import 'package:ditonton/data/datasources/tvseries_remote_data_source.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
 import 'package:ditonton/data/repositories/tvseries_repository_impl.dart';
-import 'package:ditonton/domain/entities/tvseries_detail.dart';
 import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:ditonton/domain/repositories/tvseries_repository.dart';
 import 'package:ditonton/domain/usecases/get_now_airing_tvseries.dart';
@@ -50,15 +50,17 @@ void init() {
   Get.put<http.Client>(http.Client());
 
   // tv series data source
-  Get.put<TVSeriesRemoteDataSource>(
-    TVSeriesRemoteDataSourceImpl(
-      client: Get.find(),
-    ),
-  );
+  Get.put<TVSeriesRemoteDataSource>(TVSeriesRemoteDataSourceImpl(
+    client: Get.find(),
+  ));
+  Get.put<TVSeriesLocalDataSource>(TVSeriesLocalDataSourcImpl());
 
   // tv series repository
   Get.put<TVSeriesRepository>(TVSeriesRepositoryImpl(
-      remoteDataSource: Get.find(), networkInfo: Get.find()));
+    remoteDataSource: Get.find(),
+    networkInfo: Get.find(),
+    localDataSource: Get.find(),
+  ));
 
   // tvseries usecases
   Get.put(GetNowAiringTVSeries(Get.find()));
@@ -71,7 +73,7 @@ void init() {
   Get.put(PopularTVSeriesListStores(getPopularTVSeries: Get.find()));
   Get.put(TopRatedTVSeriesListStores(getTopRatedTVSeries: Get.find()));
   Get.put(TVSeriesDetailStore(getTVSeriesDetail: Get.find()));
-  Get.put(TVSeriesWatchlistStore());
+  Get.put(TVSeriesWatchlistStore(repository: Get.find()));
 
   // provider
   locator.registerFactory(

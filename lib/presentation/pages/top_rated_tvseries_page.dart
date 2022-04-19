@@ -1,5 +1,4 @@
 import 'package:ditonton/domain/entities/tvseries.dart';
-import 'package:ditonton/presentation/stores/popular_tvseries_list_store.dart';
 import 'package:ditonton/presentation/stores/top_rated_tvseries_list.dart';
 import 'package:ditonton/presentation/widgets/tvseries_card.dart';
 import 'package:flutter/material.dart';

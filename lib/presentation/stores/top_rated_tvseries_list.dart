@@ -1,4 +1,3 @@
-import 'package:ditonton/domain/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_tvseries.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 

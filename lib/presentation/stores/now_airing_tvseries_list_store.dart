@@ -1,6 +1,3 @@
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/entities/tvseries.dart';
-import 'package:ditonton/domain/repositories/tvseries_repository.dart';
 import 'package:ditonton/domain/usecases/get_now_airing_tvseries.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 

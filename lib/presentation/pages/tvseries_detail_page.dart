@@ -1,18 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/presentation/stores/tvseries_detail_stores.dart';
 import 'package:ditonton/presentation/stores/tvseries_watchlist_stores.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class TVSeriesDetailPage extends StatelessWidget {
   static const routeName = '/detail-tv';
@@ -93,13 +87,26 @@ class DetailContentTV extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                tVSeriesWatchlistStore.addToWatchlist(
+                                tVSeriesWatchlistStore.toggleToWatchlist(
                                     tvSeriesDetail.toTVSeries());
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.add),
+                                  ScopedBuilder(
+                                    store: tVSeriesWatchlistStore,
+                                    onState: (context, state) =>
+                                        tVSeriesWatchlistStore
+                                                .checkIfInWatchlist(
+                                                    tvSeriesDetail.toTVSeries())
+                                            ? Icon(Icons.check)
+                                            : Icon(Icons.add),
+                                    onError: (context, error) =>
+                                        Center(child: Text('error')),
+                                    onLoading: (context) => Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
                                   Text('Watchlist'),
                                 ],
                               ),

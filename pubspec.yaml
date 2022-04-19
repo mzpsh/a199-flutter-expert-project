@@ -44,6 +44,8 @@ dependencies:
       ref: master
   get: ^4.6.1
   flutter_triple:
+  sembast:
+  path:
 
 dev_dependencies:
   mockito: ^5.0.8

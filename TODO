@@ -5,12 +5,12 @@ get top rated tv series DONE
   and its own page DONE
 show detail DONE
   make tvdetail response and tvdetail DONE
-save to watchlist
-is on wachlist
-remove from watchlist
-get watchlist
-sync watchlist to db
-search
+save to watchlist DONE
+is on wachlist DONE
+remove from watchlist DONE
+sync watchlist to db DONE
+get watchlist DONE
+search 
 get recommendations
 testing :)
 
@@ -18,7 +18,7 @@ testing :)
 
 
 
-## watchlist structure
+# watchlist structure
   <TVSeriesDetail>[]
 
   addToWatchlist
@@ -36,7 +36,7 @@ testing :)
 
 
 
-## Structure
+# Structure
                    presentation/pages
                             ⬇️
                   presentation/provider

@@ -6,64 +6,53 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/tvseries_local_data_source.dart';
 import 'package:ditonton/data/datasources/tvseries_remote_data_source.dart';
-import 'package:ditonton/data/models/tvseries_table.dart';
+import 'package:ditonton/data/models/tvseries_model.dart';
 import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
 import 'package:ditonton/domain/repositories/tvseries_repository.dart';
-import 'package:ditonton/domain/usecases/get_popular_tvseries.dart';
 
 class TVSeriesRepositoryImpl implements TVSeriesRepository {
   final NetworkInfo networkInfo;
   final TVSeriesRemoteDataSource remoteDataSource;
+  final TVSeriesLocalDataSource localDataSource;
   // final TVSeriesLocalDataSource localDataSource;
 
   TVSeriesRepositoryImpl({
     required this.networkInfo,
     required this.remoteDataSource,
+    required this.localDataSource,
   });
 
   Future<Either<Failure, List<TVSeries>>> getNowAiringTVSeries() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.getNowAiringTVSeries();
-        // localDataSource.cacheNowAiringTVSeries(
-        //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
-        return Right(result.map((model) => model.toEntity()).toList());
-      } on ServerException {
-        return Left(ServerFailure(''));
-      }
-    } else {
-      return Left(CacheFailure(''));
+    try {
+      final result = await remoteDataSource.getNowAiringTVSeries();
+      // localDataSource.cacheNowAiringTVSeries(
+      //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
     }
   }
 
   Future<Either<Failure, List<TVSeries>>> getPopularTVSeries() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.getPopularTVSeries();
-        // localDataSource.cacheNowAiringTVSeries(
-        //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
-        return Right(result.map((model) => model.toEntity()).toList());
-      } on ServerException {
-        return Left(ServerFailure(''));
-      }
-    } else {
-      return Left(CacheFailure(''));
+    try {
+      final result = await remoteDataSource.getPopularTVSeries();
+      // localDataSource.cacheNowAiringTVSeries(
+      //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
     }
   }
 
   Future<Either<Failure, List<TVSeries>>> getTopRatedTVSeries() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.getTopRatedTVSeries();
-        // localDataSource.cacheNowAiringTVSeries(
-        //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
-        return Right(result.map((model) => model.toEntity()).toList());
-      } on ServerException {
-        return Left(ServerFailure(''));
-      }
-    } else {
-      return Left(CacheFailure(''));
+    try {
+      final result = await remoteDataSource.getTopRatedTVSeries();
+      // localDataSource.cacheNowAiringTVSeries(
+      //     result.map((tvSeries) => TVSeriesTable.fromDTO(tvSeries)).toList());
+      return Right(result.map((model) => model.toEntity()).toList());
+    } on ServerException {
+      return Left(ServerFailure(''));
     }
   }
 
@@ -76,5 +65,24 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
+  }
+
+  Future<List<TVSeries>> readWatchlistTVSeries() async {
+    List<TVSeriesModel> tvSeriesModelList =
+        await localDataSource.readWatchlistTVSeries();
+    var list = <TVSeries>[];
+    for (var tvSeriesModel in tvSeriesModelList) {
+      list.add(tvSeriesModel.toEntity());
+    }
+    return list;
+  }
+
+  Future<bool> writeWatchlistTVSeries(List<TVSeries> tvSeriesList) {
+    var list = <TVSeriesModel>[];
+    for (var element in tvSeriesList) {
+      list.add(element.toTVSeriesModel());
+    }
+
+    return localDataSource.writeWatchlistTVSeries(list);
   }
 }
