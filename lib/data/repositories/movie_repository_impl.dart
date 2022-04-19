@@ -25,10 +25,12 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {
     if (await networkInfo.isConnected) {
+      print('called');
       try {
         final result = await remoteDataSource.getNowPlayingMovies();
         localDataSource.cacheNowPlayingMovies(
             result.map((movie) => MovieTable.fromDTO(movie)).toList());
+        print('done');
         return Right(result.map((model) => model.toEntity()).toList());
       } on ServerException {
         return Left(ServerFailure(''));

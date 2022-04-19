@@ -1,5 +1,6 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/pages/TestingPage.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
@@ -9,6 +10,7 @@ import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/search_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tvseries_page.dart';
+import 'package:ditonton/presentation/pages/tvseries_detail_page.dart';
 import 'package:ditonton/presentation/pages/tvseries_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tvseries_page.dart';
@@ -93,6 +95,12 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => TopRatedTVSeriesPage());
             case PopularTVSeriesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => PopularTVSeriesPage());
+            case TVSeriesDetailPage.routeName:
+              final id = settings.arguments as int;
+              return MaterialPageRoute(
+                builder: (_) => TVSeriesDetailPage(id: id),
+                settings: settings,
+              );
             default:
               return MaterialPageRoute(builder: (_) {
                 return Scaffold(

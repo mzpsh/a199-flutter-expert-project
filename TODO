@@ -1,19 +1,38 @@
-## TV Series list (now airing, popular, top rated)
-  - poster path
-  - title
-  - overview/description
+get now airing tv series DONE
+get popular tv series DONE
+  and its own page DONE
+get top rated tv series DONE
+  and its own page DONE
+show detail DONE
+  make tvdetail response and tvdetail DONE
+save to watchlist
+is on wachlist
+remove from watchlist
+get watchlist
+sync watchlist to db
+search
+get recommendations
+testing :)
 
-## TV Series Detail 
-  - poster path
-  - name
-  - genre
-  - length
-  - vote_average
-  - overview/description
-  - last episode on air > episode number, season number
-  - recommendation NEW API ACALL
 
 
+
+
+## watchlist structure
+  <TVSeriesDetail>[]
+
+  addToWatchlist
+    setloading
+    push[]
+    update[]
+
+  checkStatus(pagedetail)
+    foreach[]
+      if pagedetal in []
+        return true
+      else
+        return false
+  
 
 
 
