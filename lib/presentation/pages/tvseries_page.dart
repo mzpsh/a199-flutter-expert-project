@@ -6,7 +6,7 @@ import 'package:ditonton/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/tvseries_detail_page.dart';
 import 'package:ditonton/presentation/stores/now_airing_tvseries_list_store.dart';
 import 'package:ditonton/presentation/stores/popular_tvseries_list_store.dart';
-import 'package:ditonton/presentation/stores/top_rated_tvseries_list.dart';
+import 'package:ditonton/presentation/stores/top_rated_tvseries_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:flutter_triple/flutter_triple.dart';

@@ -1,5 +1,5 @@
 import 'package:ditonton/domain/entities/tvseries.dart';
-import 'package:ditonton/presentation/stores/tvseries_watchlist_stores.dart';
+import 'package:ditonton/presentation/stores/tvseries_watchlist_store.dart';
 import 'package:ditonton/presentation/widgets/tvseries_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';

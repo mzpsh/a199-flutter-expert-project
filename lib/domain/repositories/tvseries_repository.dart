@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
+import 'package:ditonton/presentation/pages/search_tvseries_page.dart';
 
 abstract class TVSeriesRepository {
   Future<Either<Failure, List<TVSeries>>> getNowAiringTVSeries();
@@ -10,6 +11,9 @@ abstract class TVSeriesRepository {
   Future<Either<Failure, TVSeriesDetail>> getTVSeriesDetail(int id);
   Future<List<TVSeries>> readWatchlistTVSeries();
   Future<bool> writeWatchlistTVSeries(List<TVSeries> list);
+  Future<Either<Failure, List<TVSeries>>> searchTVSeries(String query);
+  Future<Either<Failure, List<TVSeries>>> getTVSeriesRecommendations(int id);
+
   // Future<Either<Failure, List<Movie>>> getMovieRecommendations(int id);
   // Future<Either<Failure, List<Movie>>> searchMovies(String query);
   // Future<Either<Failure, String>> saveWatchlist(MovieDetail movie);

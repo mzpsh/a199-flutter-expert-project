@@ -1,4 +1,4 @@
-import 'package:ditonton/presentation/stores/tvseries_detail_stores.dart';
+import 'package:ditonton/presentation/stores/tvseries_detail_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:get/get.dart';

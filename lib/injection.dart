@@ -18,11 +18,15 @@ import 'package:ditonton/domain/usecases/get_popular_tvseries.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_tvseries.dart';
 import 'package:ditonton/domain/usecases/get_tvseries_detail.dart';
+import 'package:ditonton/domain/usecases/get_tvseries_recommendations.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_movies.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
+import 'package:ditonton/domain/usecases/read_watchlist_tvseries.dart';
 import 'package:ditonton/domain/usecases/remove_watchlist.dart';
 import 'package:ditonton/domain/usecases/save_watchlist.dart';
 import 'package:ditonton/domain/usecases/search_movies.dart';
+import 'package:ditonton/domain/usecases/search_tvseries.dart';
+import 'package:ditonton/domain/usecases/write_watchlist_tvseries.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
@@ -30,9 +34,11 @@ import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/stores/now_airing_tvseries_list_store.dart';
-import 'package:ditonton/presentation/stores/top_rated_tvseries_list.dart';
-import 'package:ditonton/presentation/stores/tvseries_detail_stores.dart';
-import 'package:ditonton/presentation/stores/tvseries_watchlist_stores.dart';
+import 'package:ditonton/presentation/stores/top_rated_tvseries_list_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_detail_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_recommendations_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_search_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_watchlist_store.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:get/get.dart';
@@ -67,13 +73,22 @@ void init() {
   Get.put(GetPopularTVSeries(Get.find()));
   Get.put(GetTopRatedTVSeries(Get.find()));
   Get.put(GetTVSeriesDetail(Get.find()));
+  Get.put(ReadWatchlistTVSeries(Get.find()));
+  Get.put(WriteWatchlistTVSeries(Get.find()));
+  Get.put(SearchTVSeries(Get.find()));
+  Get.put(GetTVSeriesRecommendations(Get.find()));
 
   // tvseries stores
   Get.put(NowAiringTVSeriesListStores(getNowAiringTVSeries: Get.find()));
   Get.put(PopularTVSeriesListStores(getPopularTVSeries: Get.find()));
   Get.put(TopRatedTVSeriesListStores(getTopRatedTVSeries: Get.find()));
   Get.put(TVSeriesDetailStore(getTVSeriesDetail: Get.find()));
-  Get.put(TVSeriesWatchlistStore(repository: Get.find()));
+  Get.put(TVSeriesWatchlistStore(
+    writeWatchlistTVSeries: Get.find(),
+    readWatchlistTVSeries: Get.find(),
+  ));
+  Get.put(TVSeriesSearchStore(searchTVSeries: Get.find()));
+  Get.put(TVSeriesRecommendationsStore(getTVSeriesRecommendations: Get.find()));
 
   // provider
   locator.registerFactory(

@@ -1,10 +1,16 @@
 import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/repositories/tvseries_repository.dart';
+import 'package:ditonton/domain/usecases/read_watchlist_tvseries.dart';
+import 'package:ditonton/domain/usecases/write_watchlist_tvseries.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 
 class TVSeriesWatchlistStore extends StreamStore<Exception, List<TVSeries>> {
-  final TVSeriesRepository repository;
-  TVSeriesWatchlistStore({required this.repository}) : super(<TVSeries>[]);
+  final ReadWatchlistTVSeries readWatchlistTVSeries;
+  final WriteWatchlistTVSeries writeWatchlistTVSeries;
+  TVSeriesWatchlistStore(
+      {required this.readWatchlistTVSeries,
+      required this.writeWatchlistTVSeries})
+      : super(<TVSeries>[]);
 
   @override
   void initStore() {
@@ -13,7 +19,7 @@ class TVSeriesWatchlistStore extends StreamStore<Exception, List<TVSeries>> {
   }
 
   void _initWatchlist() async {
-    var writtenWatchlist = await repository.readWatchlistTVSeries();
+    var writtenWatchlist = await readWatchlistTVSeries.execute();
     if (writtenWatchlist.isNotEmpty) {
       update(writtenWatchlist);
     }
@@ -27,7 +33,7 @@ class TVSeriesWatchlistStore extends StreamStore<Exception, List<TVSeries>> {
     } else {
       state.add(tvSeries);
     }
-    await repository.writeWatchlistTVSeries(state);
+    await writeWatchlistTVSeries.execute(state);
     update(state, force: true);
   }
 

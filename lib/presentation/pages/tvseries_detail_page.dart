@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
-import 'package:ditonton/presentation/stores/tvseries_detail_stores.dart';
-import 'package:ditonton/presentation/stores/tvseries_watchlist_stores.dart';
+import 'package:ditonton/presentation/pages/tvseries_page.dart';
+import 'package:ditonton/presentation/stores/tvseries_detail_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_recommendations_store.dart';
+import 'package:ditonton/presentation/stores/tvseries_watchlist_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_triple/flutter_triple.dart';
@@ -35,6 +38,7 @@ class TVSeriesDetailPage extends StatelessWidget {
 class DetailContentTV extends StatelessWidget {
   final TVSeriesDetail tvSeriesDetail;
   final TVSeriesWatchlistStore tVSeriesWatchlistStore = Get.find();
+  final TVSeriesRecommendationsStore tvSeriesRecommendationsStore = Get.find();
 
   // final List<Movie> recommendations;
   // final bool isAddedWatchlist;
@@ -44,6 +48,7 @@ class DetailContentTV extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    tvSeriesRecommendationsStore.getRecommendations(tvSeriesDetail.id);
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -146,6 +151,16 @@ class DetailContentTV extends StatelessWidget {
                             Text(
                               'Recommendations',
                               style: kHeading6,
+                            ),
+                            ScopedBuilder(
+                              store: tvSeriesRecommendationsStore,
+                              onState: (context, state) =>
+                                  TVSeriesList(state as List<TVSeries>),
+                              onError: (context, error) =>
+                                  Center(child: Text('error')),
+                              onLoading: (context) => Center(
+                                child: CircularProgressIndicator(),
+                              ),
                             ),
                           ],
                         ),
