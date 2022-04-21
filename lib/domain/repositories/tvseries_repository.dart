@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
-import 'package:ditonton/presentation/pages/search_tvseries_page.dart';
 
 abstract class TVSeriesRepository {
   Future<Either<Failure, List<TVSeries>>> getNowAiringTVSeries();

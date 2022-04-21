@@ -1,5 +1,4 @@
 import 'package:ditonton/domain/entities/tvseries.dart';
-import 'package:ditonton/domain/repositories/tvseries_repository.dart';
 import 'package:ditonton/domain/usecases/read_watchlist_tvseries.dart';
 import 'package:ditonton/domain/usecases/write_watchlist_tvseries.dart';
 import 'package:flutter_triple/flutter_triple.dart';

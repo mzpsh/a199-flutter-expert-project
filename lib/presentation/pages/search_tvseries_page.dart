@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class SearchTVSeriesPage extends StatelessWidget {
   static const ROUTE_NAME = '/search-tvseries';
-  TVSeriesSearchStore tvSeriesSearchStore = Get.find();
+  final TVSeriesSearchStore tvSeriesSearchStore = Get.find();
   SearchTVSeriesPage({Key? key}) : super(key: key);
 
   @override
