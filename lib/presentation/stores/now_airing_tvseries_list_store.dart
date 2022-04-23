@@ -11,7 +11,7 @@ class NowAiringTVSeriesListStores extends StreamStore {
     this.fetchNowAiringTVSeries();
   }
 
-  void fetchNowAiringTVSeries() async {
+  Future<void> fetchNowAiringTVSeries() async {
     setLoading(true, force: true);
     final result = await this.getNowAiringTVSeries.execute();
     result.fold(

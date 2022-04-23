@@ -5,16 +5,16 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class SembastDatabaseHelper {
-  static Database? database;
+  static Database? _database;
 
-  static getDatabase() async {
-    if (database == null) {
+  Future<Database> get database async {
+    if (_database == null) {
       DatabaseFactory dbFactory = databaseFactoryIo;
       WidgetsFlutterBinding.ensureInitialized();
       var appDocumentDirectory = await getApplicationDocumentsDirectory();
       var path = join(appDocumentDirectory.path, 'flutter_expert.db');
-      database = await dbFactory.openDatabase(path);
+      _database = await dbFactory.openDatabase(path);
     }
-    return database;
+    return Future.value(_database);
   }
 }

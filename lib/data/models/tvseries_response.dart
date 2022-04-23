@@ -6,12 +6,13 @@ class TVSeriesResponse extends Equatable {
 
   TVSeriesResponse({required this.tvSeriesList});
 
-  factory TVSeriesResponse.fromJson(Map<String, dynamic> json) =>
-      TVSeriesResponse(
-        tvSeriesList: List<TVSeriesModel>.from((json["results"] as List)
-            .map((x) => TVSeriesModel.fromJson(x))
-            .where((element) => element.posterPath != null)),
-      );
+  factory TVSeriesResponse.fromJson(Map<String, dynamic> json) {
+    return TVSeriesResponse(
+      tvSeriesList: List<TVSeriesModel>.from((json["results"])
+          .map((x) => TVSeriesModel.fromJson(x))
+          .where((element) => element.posterPath != null)),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "results": List<dynamic>.from(tvSeriesList.map((x) => x.toJson())),

@@ -1,9 +1,45 @@
+import 'dart:convert';
+
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tvseries_detail_model.dart';
+import 'package:ditonton/data/models/tvseries_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tvseries.dart';
+import 'package:ditonton/domain/entities/tvseries_detail.dart';
+
+import 'tvseries_detail.dart';
+
+final testTVSeriesModel = TVSeriesModel(
+  posterPath: 'posterPath',
+  id: 69,
+  voteAverage: 5,
+  overview: 'overview',
+  name: 'name',
+);
+
+final testTVSeries = TVSeries(
+    posterPath: 'posterPath',
+    id: 69,
+    voteAverage: 5,
+    overview: 'overview',
+    name: 'name');
+
+final testTVSeriesDetail = TVSeriesDetail(
+    id: 69,
+    posterPath: 'posterPath',
+    name: 'name',
+    numberOfSeasons: 1,
+    numberOfEpisodes: 1,
+    voteAverage: 5,
+    overview: 'overview');
+
+final testTVSeriesDetailResponse = TVSeriesDetailResponse.fromJson(
+  jsonDecode(tvseries_detail_json),
+);
 
 final testMovie = Movie(
   adult: false,

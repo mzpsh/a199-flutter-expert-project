@@ -42,6 +42,13 @@ class TVSeriesModel extends Equatable {
     );
   }
 
+  factory TVSeriesModel.fromEntity(TVSeries entity) => TVSeriesModel(
+      posterPath: entity.posterPath,
+      id: entity.id,
+      voteAverage: entity.voteAverage,
+      overview: entity.overview,
+      name: entity.name);
+
   @override
   List<Object?> get props => [
         posterPath,

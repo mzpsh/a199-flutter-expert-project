@@ -11,7 +11,7 @@ class TVSeriesSearchStore extends StreamStore<String, List<TVSeries>> {
     super.initStore();
   }
 
-  void findTVSeries(String query) async {
+  Future<void> findTVSeries(String query) async {
     setLoading(true, force: true);
     final result = await this.searchTVSeries.execute(query);
     result.fold(

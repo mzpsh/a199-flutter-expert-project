@@ -13,18 +13,18 @@ class TVSeriesWatchlistStore extends StreamStore<Exception, List<TVSeries>> {
 
   @override
   void initStore() {
-    _initWatchlist();
+    initWatchlist();
     super.initStore();
   }
 
-  void _initWatchlist() async {
+  Future<void> initWatchlist() async {
     var writtenWatchlist = await readWatchlistTVSeries.execute();
     if (writtenWatchlist.isNotEmpty) {
       update(writtenWatchlist);
     }
   }
 
-  void toggleToWatchlist(TVSeries tvSeries) async {
+  Future<void> toggleToWatchlist(TVSeries tvSeries) async {
     setLoading(true, force: true);
 
     if (checkIfInWatchlist(tvSeries)) {

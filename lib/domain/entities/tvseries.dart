@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:ditonton/data/models/tvseries_model.dart';
 import 'package:equatable/equatable.dart';
 
 class TVSeries extends Equatable {
@@ -11,14 +10,6 @@ class TVSeries extends Equatable {
     required this.overview,
     required this.name,
   });
-
-  TVSeriesModel toTVSeriesModel() => TVSeriesModel(
-        id: this.id,
-        name: this.name,
-        overview: this.overview,
-        posterPath: this.posterPath,
-        voteAverage: this.voteAverage,
-      );
 
   String? posterPath;
   int id;

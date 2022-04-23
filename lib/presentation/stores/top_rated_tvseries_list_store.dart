@@ -11,7 +11,7 @@ class TopRatedTVSeriesListStores extends StreamStore {
     this.fetchPopularTVSeries();
   }
 
-  void fetchPopularTVSeries() async {
+  Future<void> fetchPopularTVSeries() async {
     setLoading(true, force: true);
     final result = await this.getTopRatedTVSeries.execute();
     result.fold(

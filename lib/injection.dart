@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
+import 'package:ditonton/data/datasources/db/sembast_database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/datasources/tvseries_local_data_source.dart';
@@ -42,12 +43,17 @@ import 'package:ditonton/presentation/stores/tvseries_watchlist_store.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:get/get.dart';
+import 'package:sembast/sembast.dart';
 
 import 'presentation/stores/popular_tvseries_list_store.dart';
 
 final locator = GetIt.instance;
 
 void init() {
+  // database helper
+  Get.put(SembastDatabaseHelper());
+  Get.put(StoreRef.main());
+
   // tv series network info
   Get.put(DataConnectionChecker());
   Get.put<NetworkInfo>(NetworkInfoImpl(Get.find()));
@@ -59,12 +65,15 @@ void init() {
   Get.put<TVSeriesRemoteDataSource>(TVSeriesRemoteDataSourceImpl(
     client: Get.find(),
   ));
-  Get.put<TVSeriesLocalDataSource>(TVSeriesLocalDataSourcImpl());
+  Get.put<TVSeriesLocalDataSource>(TVSeriesLocalDataSourcImpl(
+    dbHelper: Get.find(),
+    storeRef: Get.find(),
+  ));
 
   // tv series repository
   Get.put<TVSeriesRepository>(TVSeriesRepositoryImpl(
     remoteDataSource: Get.find(),
-    networkInfo: Get.find(),
+    // networkInfo: Get.find(),
     localDataSource: Get.find(),
   ));
 

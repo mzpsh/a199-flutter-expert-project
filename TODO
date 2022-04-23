@@ -1,3 +1,32 @@
+DONE make a way to troubleshoot without flutter test.
+DONE test models
+  DONE tvseries model
+  DONE tvseries response
+  DONE tvseries detail_model
+  DONE tvseries detail entity
+DONE tvseries remote data source
+  DONE getNowAiringTVSeries
+  DONE getPopularTVSeries
+  DONE getTopRatedTVSeries
+  DONE getTVSeriesDetail
+  DONE searchTVSeries
+  DONE getTVSeriesRecommendations
+SEEMS TAKING TOO LONGtvseries local data source
+  readWatchlistTVSeries
+  writeWatchlistTVSeries
+DONE test repositories
+test usecases
+  DONE getNowAiringTVSeries
+  DONE getPopularTVSeries
+  DONE getTopRatedTVSeries
+  DONE getTVSeriesDetail
+  DONE readWatchlistTVSeries
+  DONE writeWatchlistTVSeries
+  DONE searchTVSeries
+  DONE getTVSeriesRecommendations
+intregation_test
+  able to see overview
+
 get now airing tv series DONE
 get popular tv series DONE
   and its own page DONE
@@ -12,7 +41,6 @@ sync watchlist to db DONE
 get watchlist DONE
 search DONE
 get recommendations DONE
-testing :)
 
 
 

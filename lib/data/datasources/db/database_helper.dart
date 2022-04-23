@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:ditonton/data/models/movie_table.dart';
-import 'package:ditonton/data/models/tvseries_table.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -60,18 +59,6 @@ class DatabaseHelper {
         final movieJson = movie.toJson();
         movieJson['category'] = category;
         txn.insert(_tblCache, movieJson);
-      }
-    });
-  }
-
-  Future<void> insertCacheTransactionTVSeries(
-      List<TVSeriesTable> tvSeriesList, String category) async {
-    final db = await database;
-    db!.transaction((txn) async {
-      for (final tvSeries in tvSeriesList) {
-        final tvSeriesJson = tvSeries.toJson();
-        tvSeriesJson['category'] = category;
-        txn.insert(_tblCache, tvSeriesJson);
       }
     });
   }

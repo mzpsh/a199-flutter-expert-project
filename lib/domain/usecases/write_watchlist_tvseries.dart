@@ -5,7 +5,7 @@ class WriteWatchlistTVSeries {
   final TVSeriesRepository repository;
   WriteWatchlistTVSeries(this.repository);
 
-  Future<bool> execute(List<TVSeries> list) {
+  Future<dynamic> execute(List<TVSeries> list) {
     return repository.writeWatchlistTVSeries(list);
   }
 }

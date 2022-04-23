@@ -10,7 +10,7 @@ class TVSeriesDetailStore extends StreamStore {
     super.initStore();
   }
 
-  void fetchTVSeriesDetail(int id) async {
+  Future<void> fetchTVSeriesDetail(int id) async {
     setLoading(true, force: true);
     final result = await this.getTVSeriesDetail.execute(id);
     result.fold(

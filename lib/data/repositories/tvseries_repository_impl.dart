@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/tvseries_local_data_source.dart';
 import 'package:ditonton/data/datasources/tvseries_remote_data_source.dart';
 import 'package:ditonton/data/models/tvseries_model.dart';
@@ -12,13 +9,11 @@ import 'package:ditonton/domain/entities/tvseries_detail.dart';
 import 'package:ditonton/domain/repositories/tvseries_repository.dart';
 
 class TVSeriesRepositoryImpl implements TVSeriesRepository {
-  final NetworkInfo networkInfo;
   final TVSeriesRemoteDataSource remoteDataSource;
   final TVSeriesLocalDataSource localDataSource;
   // final TVSeriesLocalDataSource localDataSource;
 
   TVSeriesRepositoryImpl({
-    required this.networkInfo,
     required this.remoteDataSource,
     required this.localDataSource,
   });
@@ -62,8 +57,6 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
       return Right(result.toEntity());
     } on ServerException {
       return Left(ServerFailure(''));
-    } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 
@@ -80,7 +73,7 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
   Future<bool> writeWatchlistTVSeries(List<TVSeries> tvSeriesList) {
     var list = <TVSeriesModel>[];
     for (var element in tvSeriesList) {
-      list.add(element.toTVSeriesModel());
+      list.add(TVSeriesModel.fromEntity(element));
     }
 
     return localDataSource.writeWatchlistTVSeries(list);
@@ -92,8 +85,6 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));
-    } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 
@@ -105,8 +96,6 @@ class TVSeriesRepositoryImpl implements TVSeriesRepository {
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));
-    } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 }

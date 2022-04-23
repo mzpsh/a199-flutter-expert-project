@@ -16,21 +16,19 @@ abstract class TVSeriesLocalDataSource {
 }
 
 class TVSeriesLocalDataSourcImpl implements TVSeriesLocalDataSource {
-//   final DatabaseHelper databaseHelper;
-//   TVSeriesLocalDataSourcImpl({required this.databaseHelper});
+  final SembastDatabaseHelper dbHelper;
+  final StoreRef storeRef;
 
-//   @override
-//   Future<void> cacheNowAiringTVSeries(List<TVSeriesTable> tvSeriesList) async {
-//     await databaseHelper.clearCache('now airing');
-//     await databaseHelper.insertCacheTransactionTVSeries(
-//         tvSeriesList, 'now airing');
-//   }
+  TVSeriesLocalDataSourcImpl({
+    required this.dbHelper,
+    required this.storeRef,
+  });
 
   @override
   Future<bool> writeWatchlistTVSeries(
       List<TVSeriesModel> tvSeriesModelList) async {
-    var db = await SembastDatabaseHelper.getDatabase();
-    var tvWatchlistRecord = StoreRef.main().record('tvWatchlist');
+    var db = await dbHelper.database;
+    var tvWatchlistRecord = storeRef.record('tvWatchlist');
     List json = [];
     for (var element in tvSeriesModelList) {
       json.add(element.toJson());
@@ -47,8 +45,8 @@ class TVSeriesLocalDataSourcImpl implements TVSeriesLocalDataSource {
 
   @override
   Future<List<TVSeriesModel>> readWatchlistTVSeries() async {
-    var db = await SembastDatabaseHelper.getDatabase();
-    var tvWatchlistRecord = StoreRef.main().record('tvWatchlist');
+    var db = await dbHelper.database;
+    var tvWatchlistRecord = storeRef.record('tvWatchlist');
     var list = <TVSeriesModel>[];
 
     try {
