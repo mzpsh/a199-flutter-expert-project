@@ -49,10 +49,10 @@ import 'presentation/stores/popular_tvseries_list_store.dart';
 
 final locator = GetIt.instance;
 
-void init() {
+void init() async {
   // database helper
-  Get.put(SembastDatabaseHelper());
   Get.put(StoreRef.main());
+  final db = SembastDatabaseHelper();
 
   // tv series network info
   Get.put(DataConnectionChecker());
@@ -66,8 +66,8 @@ void init() {
     client: Get.find(),
   ));
   Get.put<TVSeriesLocalDataSource>(TVSeriesLocalDataSourcImpl(
-    dbHelper: Get.find(),
-    storeRef: Get.find(),
+    db: await db.database,
+    storeRef: StoreRef.main(),
   ));
 
   // tv series repository

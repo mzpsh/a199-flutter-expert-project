@@ -11,11 +11,11 @@ DONE tvseries remote data source
   DONE getTVSeriesDetail
   DONE searchTVSeries
   DONE getTVSeriesRecommendations
-SEEMS TAKING TOO LONGtvseries local data source
-  readWatchlistTVSeries
-  writeWatchlistTVSeries
+DONE tvseries local data source
+  DONE readWatchlistTVSeries
+  DONE writeWatchlistTVSeries
 DONE test repositories
-test usecases
+DONE test usecases
   DONE getNowAiringTVSeries
   DONE getPopularTVSeries
   DONE getTopRatedTVSeries
