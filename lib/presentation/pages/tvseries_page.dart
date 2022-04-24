@@ -107,10 +107,13 @@ class TVSeriesPage extends StatelessWidget {
   }
 }
 
+/// Submission 1108758
+/// Fix onTap method
 class TVSeriesList extends StatelessWidget {
   final List<TVSeries> tvSeriesList;
+  bool isFromRecommendation;
 
-  TVSeriesList(this.tvSeriesList);
+  TVSeriesList(this.tvSeriesList, {this.isFromRecommendation = false});
 
   @override
   Widget build(BuildContext context) {
@@ -123,13 +126,21 @@ class TVSeriesList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TVSeriesDetailPage.routeName,
-                  arguments: movie.id,
-                );
-              },
+              onTap: isFromRecommendation
+                  ? () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        TVSeriesDetailPage.routeName,
+                        arguments: movie.id,
+                      );
+                    }
+                  : () {
+                      Navigator.pushNamed(
+                        context,
+                        TVSeriesDetailPage.routeName,
+                        arguments: movie.id,
+                      );
+                    },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(

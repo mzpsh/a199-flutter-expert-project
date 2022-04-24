@@ -13,6 +13,7 @@ class TVSeriesRecommendationsStore extends StreamStore<String, List<TVSeries>> {
   }
 
   Future<void> getRecommendations(int id) async {
+    print('store: getting new recommendation');
     setLoading(true, force: true);
     final result = await this.getTVSeriesRecommendations.execute(id);
     result.fold(

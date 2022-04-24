@@ -154,8 +154,10 @@ class DetailContentTV extends StatelessWidget {
                             ),
                             ScopedBuilder(
                               store: tvSeriesRecommendationsStore,
-                              onState: (context, state) =>
-                                  TVSeriesList(state as List<TVSeries>),
+                              onState: (context, state) => TVSeriesList(
+                                state as List<TVSeries>,
+                                isFromRecommendation: true,
+                              ),
                               onError: (context, error) =>
                                   Center(child: Text('error')),
                               onLoading: (context) => Center(

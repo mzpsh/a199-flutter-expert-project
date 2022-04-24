@@ -6,21 +6,30 @@ import 'package:flutter/material.dart';
 
 class TVSeriesCard extends StatelessWidget {
   final TVSeries tvSeries;
+  bool isFromRecommendation;
 
-  TVSeriesCard(this.tvSeries);
+  TVSeriesCard(this.tvSeries, {this.isFromRecommendation = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            TVSeriesDetailPage.routeName,
-            arguments: tvSeries.id,
-          );
-        },
+        onTap: isFromRecommendation
+            ? () {
+                Navigator.popAndPushNamed(
+                  context,
+                  TVSeriesDetailPage.routeName,
+                  arguments: tvSeries.id,
+                );
+              }
+            : () {
+                Navigator.pushNamed(
+                  context,
+                  TVSeriesDetailPage.routeName,
+                  arguments: tvSeries.id,
+                );
+              },
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
