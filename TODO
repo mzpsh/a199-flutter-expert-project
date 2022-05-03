@@ -1,22 +1,23 @@
 convert store/provider to bloc
   now playing movie list DONE
   popular movie list  DONE
-  top rated movie list
-  movie recommendation list
-  movie detail
+  top rated movie list DONE
   movie search DONE
-  movie watchlist
-  
+  movie watchlist  DONE
+  movie detail DONE
+  movie recommendation list DONE
+  movie watchlistStatus DONE
+
+  tvseries detail
+  tvseries watchlist
+  tvseries watchliststatus
+  tvseries search
   now airing tv series list
   popular tvseries list
   top rated tvseries list
   tvseries recommendations list
-  tvseries detail
-  tvseries search
-  tvseries watchlist
 ssl pinning
 firebase analytics and crashlytics
-modularization
 ci
 
 DONE make a way to troubleshoot without flutter test.

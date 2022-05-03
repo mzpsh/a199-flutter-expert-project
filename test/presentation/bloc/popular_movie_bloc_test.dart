@@ -37,6 +37,7 @@ void main() {
         PopularMovieLoading(),
         PopularMovieHasData([testMovie])
       ],
+      verify: (bloc) => verify(() => usecase.execute()),
     );
 
     blocTest<PopularMovieBloc, PopularMovieState>(
@@ -49,6 +50,7 @@ void main() {
       act: (bloc) => bloc.add(OnFetchPopularMovie()),
       wait: const Duration(milliseconds: 100),
       expect: () => [PopularMovieLoading(), PopularMovieError('testError')],
+      verify: (bloc) => verify(() => usecase.execute()),
     );
   });
 }

@@ -6,3 +6,5 @@ abstract class WatchlistMovieEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class OnFetchWatchlistMovie extends WatchlistMovieEvent {}
