@@ -1,16 +1,25 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/presentation/bloc/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_recommendations_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_watchlist_status_bloc.dart';
+import 'package:ditonton/presentation/bloc/now_airing_tv_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/now_playing_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
-import 'package:ditonton/presentation/bloc/search_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_tv_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_recommendations_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_search_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_watchlist_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/search_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
+import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/popular_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
@@ -21,17 +30,10 @@ import 'package:ditonton/presentation/pages/tvseries_detail_page.dart';
 import 'package:ditonton/presentation/pages/tvseries_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tvseries_page.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:ditonton/injection.dart' as di;
 
 void main() async {
   await di.init();
@@ -50,6 +52,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => di.locator<MovieRecommendationsBloc>()),
         BlocProvider(create: (_) => di.locator<MovieDetailBloc>()),
         BlocProvider(create: (_) => di.locator<MovieWatchlistStatusBloc>()),
+        BlocProvider(create: (_) => di.locator<SearchBloc>()),
+        BlocProvider(create: (_) => di.locator<TVSeriesDetailBloc>()),
+        BlocProvider(create: (_) => di.locator<TvSeriesWatchlistStatusBloc>()),
+        BlocProvider(create: (_) => di.locator<TvSeriesWatchlistBloc>()),
+        BlocProvider(create: (_) => di.locator<TvSeriesSearchBloc>()),
+        BlocProvider(create: (_) => di.locator<TvSeriesRecommendationsBloc>()),
+        BlocProvider(create: (_) => di.locator<NowAiringTvSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<TopRatedTvSeriesBloc>()),
+        BlocProvider(create: (_) => di.locator<PopularTvSeriesBloc>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

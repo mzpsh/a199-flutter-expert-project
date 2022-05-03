@@ -1,44 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/domain/entities/tvseries_detail.dart';
+import 'package:ditonton/presentation/bloc/tv_series_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_recommendations_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_series_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/pages/tvseries_page.dart';
-import 'package:ditonton/presentation/stores/tvseries_detail_store.dart';
-import 'package:ditonton/presentation/stores/tvseries_recommendations_store.dart';
-import 'package:ditonton/presentation/stores/tvseries_watchlist_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_triple/flutter_triple.dart';
-import 'package:get/get.dart';
 
 class TVSeriesDetailPage extends StatelessWidget {
   static const routeName = '/detail-tv';
-  final TVSeriesDetailStore tvSeriesDetailStore = Get.find();
   final int id;
 
   TVSeriesDetailPage({this.id = 102045, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    tvSeriesDetailStore.fetchTVSeriesDetail(id);
-    return Scaffold(
-      body: ScopedBuilder(
-        store: tvSeriesDetailStore,
-        onState: (context, state) =>
-            SafeArea(child: DetailContentTV(state as TVSeriesDetail)),
-        onError: (context, error) => Center(child: Text('error')),
-        onLoading: (context) => Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
+    context.read<TVSeriesDetailBloc>().add(OnFetchTVSeriesDetail(this.id));
+    return Scaffold(body: BlocBuilder<TVSeriesDetailBloc, TVSeriesDetailState>(
+      builder: (context, state) {
+        if (state is TVSeriesDetailHasData) {
+          return SafeArea(child: DetailContentTV(state.result));
+        } else if (state is TVSeriesDetailLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          return Center(child: Text('error'));
+        }
+      },
+    ));
   }
 }
 
 class DetailContentTV extends StatelessWidget {
   final TVSeriesDetail tvSeriesDetail;
-  final TVSeriesWatchlistStore tVSeriesWatchlistStore = Get.find();
-  final TVSeriesRecommendationsStore tvSeriesRecommendationsStore = Get.find();
 
   // final List<Movie> recommendations;
   // final bool isAddedWatchlist;
@@ -48,7 +43,13 @@ class DetailContentTV extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    tvSeriesRecommendationsStore.getRecommendations(tvSeriesDetail.id);
+    context
+        .read<TvSeriesWatchlistStatusBloc>()
+        .add(OnCheckTvSeriesWatchlistStatus(this.tvSeriesDetail.toTVSeries()));
+
+    context
+        .read<TvSeriesRecommendationsBloc>()
+        .add(OnFetchTvSeriesRecommendation(this.tvSeriesDetail.id));
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -92,26 +93,30 @@ class DetailContentTV extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                tVSeriesWatchlistStore.toggleToWatchlist(
-                                    tvSeriesDetail.toTVSeries());
+                                context
+                                    .read<TvSeriesWatchlistStatusBloc>()
+                                    .add(OnToggleTvSeriesWatchlistStatus(
+                                      this.tvSeriesDetail.toTVSeries(),
+                                    ));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  ScopedBuilder(
-                                    store: tVSeriesWatchlistStore,
-                                    onState: (context, state) =>
-                                        tVSeriesWatchlistStore
-                                                .checkIfInWatchlist(
-                                                    tvSeriesDetail.toTVSeries())
-                                            ? Icon(Icons.check)
-                                            : Icon(Icons.add),
-                                    onError: (context, error) =>
-                                        Center(child: Text('error')),
-                                    onLoading: (context) => Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  ),
+                                  BlocBuilder<TvSeriesWatchlistStatusBloc,
+                                          TvSeriesWatchlistStatusState>(
+                                      builder: ((context, state) {
+                                    if (state is TvSeriesWatchlistStatusIsIn) {
+                                      return state.isIn
+                                          ? Icon(Icons.check)
+                                          : Icon(Icons.add);
+                                    } else if (state
+                                        is TvSeriesWatchlistStatusLoading) {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    } else {
+                                      return Center(child: Text('error'));
+                                    }
+                                  })),
                                   Text('Watchlist'),
                                 ],
                               ),
@@ -152,18 +157,24 @@ class DetailContentTV extends StatelessWidget {
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            ScopedBuilder(
-                              store: tvSeriesRecommendationsStore,
-                              onState: (context, state) => TVSeriesList(
-                                state as List<TVSeries>,
-                                isFromRecommendation: true,
-                              ),
-                              onError: (context, error) =>
-                                  Center(child: Text('error')),
-                              onLoading: (context) => Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
+                            BlocBuilder<TvSeriesRecommendationsBloc,
+                                TvSeriesRecommendationsState>(
+                              builder: (context, state) {
+                                if (state is TvSeriesRecommendationsHasData) {
+                                  return TVSeriesList(
+                                    state.result,
+                                    isFromRecommendation: true,
+                                  );
+                                } else if (state
+                                    is TvSeriesRecommendationsLoading) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
+                              },
+                            )
                           ],
                         ),
                       ),

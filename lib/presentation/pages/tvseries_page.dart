@@ -1,23 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/tvseries.dart';
+import 'package:ditonton/presentation/bloc/now_airing_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_tv_series_bloc.dart';
 import 'package:ditonton/presentation/pages/popular_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/search_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:ditonton/presentation/pages/tvseries_detail_page.dart';
-import 'package:ditonton/presentation/stores/now_airing_tvseries_list_store.dart';
-import 'package:ditonton/presentation/stores/popular_tvseries_list_store.dart';
-import 'package:ditonton/presentation/stores/top_rated_tvseries_list_store.dart';
 import 'package:flutter/material.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:flutter_triple/flutter_triple.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TVSeriesPage extends StatelessWidget {
   static const ROUTE_NAME = '/tvseries';
   TVSeriesPage({Key? key}) : super(key: key);
-  final NowAiringTVSeriesListStores nowAiringTVSeriesListStores = Get.find();
-  final PopularTVSeriesListStores popularTVSeriesListStores = Get.find();
-  final TopRatedTVSeriesListStores topRatedTVSeriesListStores = Get.find();
 
   Row _buildSubHeading({required String title, required Function() onTap}) {
     return Row(
@@ -42,6 +38,9 @@ class TVSeriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<NowAiringTvSeriesBloc>().add(OnFetchNowAiringTvSeries());
+    context.read<PopularTvSeriesBloc>().add(OnFetchPopularTvSeries());
+    context.read<TopRatedTvSeriesBloc>().add(OnFetchTopRatedTvSeries());
     return Scaffold(
       appBar: AppBar(
         title: Text('TV Series'),
@@ -63,43 +62,46 @@ class TVSeriesPage extends StatelessWidget {
               'Currently Airing',
               style: kHeading6,
             ),
-            ScopedBuilder(
-              store: nowAiringTVSeriesListStores,
-              onState: (context, state) =>
-                  TVSeriesList(state as List<TVSeries>),
-              onError: (context, error) => Center(child: Text('$error')),
-              onLoading: (context) => Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+            BlocBuilder<NowAiringTvSeriesBloc, NowAiringTvSeriesState>(
+                builder: (context, state) {
+              if (state is NowAiringTvSeriesHasData) {
+                return TVSeriesList(state.result);
+              } else if (state is NowAiringTvSeriesLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return Center(child: Text('Error'));
+              }
+            }),
             _buildSubHeading(
               title: 'Popular TV Series',
               onTap: () =>
                   Navigator.pushNamed(context, PopularTVSeriesPage.ROUTE_NAME),
             ),
-            ScopedBuilder(
-              store: popularTVSeriesListStores,
-              onState: (context, state) =>
-                  TVSeriesList(state as List<TVSeries>),
-              onError: (context, error) => Center(child: Text('$error')),
-              onLoading: (context) => Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+            BlocBuilder<PopularTvSeriesBloc, PopularTvSeriesState>(
+                builder: (context, state) {
+              if (state is PopularTvSeriesHasData) {
+                return TVSeriesList(state.result);
+              } else if (state is PopularTvSeriesLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return Center(child: Text('Error'));
+              }
+            }),
             _buildSubHeading(
               title: 'Top Rated TV Series',
               onTap: () =>
                   Navigator.pushNamed(context, TopRatedTVSeriesPage.ROUTE_NAME),
             ),
-            ScopedBuilder(
-              store: topRatedTVSeriesListStores,
-              onState: (context, state) =>
-                  TVSeriesList(state as List<TVSeries>),
-              onError: (context, error) => Center(child: Text('$error')),
-              onLoading: (context) => Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
+            BlocBuilder<TopRatedTvSeriesBloc, TopRatedTvSeriesState>(
+                builder: (context, state) {
+              if (state is TopRatedTvSeriesHasData) {
+                return TVSeriesList(state.result);
+              } else if (state is TopRatedTvSeriesLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return Center(child: Text('Error'));
+              }
+            }),
           ]),
         ),
       ),
@@ -109,6 +111,7 @@ class TVSeriesPage extends StatelessWidget {
 
 /// Submission 1108758
 /// Fix onTap method
+/// ignore: must_be_immutable
 class TVSeriesList extends StatelessWidget {
   final List<TVSeries> tvSeriesList;
   bool isFromRecommendation;

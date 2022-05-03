@@ -8,14 +8,14 @@ convert store/provider to bloc
   movie recommendation list DONE
   movie watchlistStatus DONE
 
-  tvseries detail
-  tvseries watchlist
-  tvseries watchliststatus
-  tvseries search
-  now airing tv series list
-  popular tvseries list
-  top rated tvseries list
-  tvseries recommendations list
+  tvseries detail DONE
+  tvseries watchliststatus DONE
+  tvseries watchlist DONE
+  tvseries search DONE
+  tvseries recommendations list DONE
+  now airing tv series list  DONE
+  popular tvseries list DONE
+  top rated tvseries list DONE
 ssl pinning
 firebase analytics and crashlytics
 ci

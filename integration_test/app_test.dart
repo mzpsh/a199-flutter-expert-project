@@ -8,9 +8,6 @@ import 'package:ditonton/main.dart' as app;
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  /// TODO
-  /// Provider + Get It misbehaving
-  /// will research later
   group('end-to-end test', () {
     testWidgets('should be able to show detail page',
         (WidgetTester tester) async {

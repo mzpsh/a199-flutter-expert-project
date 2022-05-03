@@ -1,11 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class TopRatedMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/top-rated-movie';
@@ -21,11 +17,6 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
     Future.microtask(() =>
         () => context.read<TopRatedMovieBloc>().add(OnFetchTopRatedMovie()));
   }
-
-  Function _movieCardBuilder = (context, index, TopRatedMoviesNotifier data) {
-    final movie = data.movies[index];
-    return MovieCard(movie);
-  };
 
   @override
   Widget build(BuildContext context) {

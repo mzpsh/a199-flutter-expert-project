@@ -1,14 +1,14 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/tvseries.dart';
-import 'package:ditonton/presentation/stores/tvseries_search_store.dart';
+import 'package:ditonton/presentation/bloc/tv_series_search_bloc.dart';
 import 'package:ditonton/presentation/widgets/tvseries_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:get/get.dart';
 
 class SearchTVSeriesPage extends StatelessWidget {
   static const ROUTE_NAME = '/search-tvseries';
-  final TVSeriesSearchStore tvSeriesSearchStore = Get.find();
   SearchTVSeriesPage({Key? key}) : super(key: key);
 
   @override
@@ -21,8 +21,11 @@ class SearchTVSeriesPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onSubmitted: (query) {
-                tvSeriesSearchStore.findTVSeries(query);
+              onChanged: (query) {
+                print(query);
+                context
+                    .read<TvSeriesSearchBloc>()
+                    .add(OnQueryChangedTvSeriesSearch(query));
               },
               decoration: InputDecoration(
                 hintText: 'Search tv series name',
@@ -37,24 +40,19 @@ class SearchTVSeriesPage extends StatelessWidget {
               style: kHeading6,
             ),
             Expanded(
-              child: ScopedBuilder(
-                store: tvSeriesSearchStore,
-                onState: (context, state) {
-                  var list = state as List<TVSeries>;
-                  if (list.isEmpty) {
-                    return Container();
-                  } else {
+              child: BlocBuilder<TvSeriesSearchBloc, TvSeriesSearchState>(
+                builder: (context, state) {
+                  if (state is TvSeriesSearchHasData) {
                     return ListView.builder(
-                      itemCount: list.length,
-                      itemBuilder: (context, index) =>
-                          TVSeriesCard(list[index]),
-                    );
+                        itemCount: state.result.length,
+                        itemBuilder: (context, index) =>
+                            TVSeriesCard(state.result[index]));
+                  } else if (state is TvSeriesSearchLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    return Center(child: Text('Error'));
                   }
                 },
-                onError: (context, error) => Center(child: Text('$error')),
-                onLoading: (context) => Center(
-                  child: CircularProgressIndicator(),
-                ),
               ),
             ),
           ],
