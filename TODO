@@ -1,3 +1,24 @@
+convert store/provider to bloc
+  now playing movie list DONE
+  popular movie list  DONE
+  top rated movie list
+  movie recommendation list
+  movie detail
+  movie search DONE
+  movie watchlist
+  
+  now airing tv series list
+  popular tvseries list
+  top rated tvseries list
+  tvseries recommendations list
+  tvseries detail
+  tvseries search
+  tvseries watchlist
+ssl pinning
+firebase analytics and crashlytics
+modularization
+ci
+
 DONE make a way to troubleshoot without flutter test.
 DONE test models
   DONE tvseries model

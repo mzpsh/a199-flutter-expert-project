@@ -4,14 +4,8 @@ import 'package:ditonton/data/models/tvseries_model.dart';
 import 'package:sembast/sembast.dart';
 
 abstract class TVSeriesLocalDataSource {
-  // Future<String> insertWatchlist(TVSeriesTable movie);
-  // Future<String> removeWatchlist(TVSeriesTable movie);
-  // Future<TVSeriesTable?> getMovieById(int id);
-  // Future<List> getWatchlistTVSeries();
   Future<bool> writeWatchlistTVSeries(List<TVSeriesModel> tvSeriesModelList);
   Future<List<TVSeriesModel>> readWatchlistTVSeries();
-  // Future<void> cacheNowAiringTVSeries(List<TVSeriesTable> movies);
-  // Future<List<TVSeriesTable>> getCachedNowPlayingMovies();
 }
 
 class TVSeriesLocalDataSourcImpl implements TVSeriesLocalDataSource {

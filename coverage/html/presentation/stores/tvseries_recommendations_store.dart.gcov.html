@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">12</td>
-            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-04-24 04:02:35</td>
+            <td class="headerValue">2022-05-01 14:30:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -75,18 +75,19 @@
 <a name="13"><span class="lineNum">      13 </span>            :   }</a>
 <a name="14"><span class="lineNum">      14 </span>            : </a>
 <a name="15"><span class="lineNum">      15 </span><span class="lineCov">          1 :   Future&lt;void&gt; getRecommendations(int id) async {</span></a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          1 :     setLoading(true, force: true);</span></a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          3 :     final result = await this.getTVSeriesRecommendations.execute(id);</span></a>
-<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          1 :     result.fold(</span></a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          1 :       (failure) {</span></a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          2 :         setError(failure.message, force: true);</span></a>
-<a name="21"><span class="lineNum">      21 </span>            :       },</a>
-<a name="22"><span class="lineNum">      22 </span><span class="lineCov">          1 :       (tvSeriesData) {</span></a>
-<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          1 :         update(tvSeriesData, force: true);</span></a>
-<a name="24"><span class="lineNum">      24 </span>            :       },</a>
-<a name="25"><span class="lineNum">      25 </span>            :     );</a>
-<a name="26"><span class="lineNum">      26 </span>            :   }</a>
-<a name="27"><span class="lineNum">      27 </span>            : }</a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          1 :     print('store: getting new recommendation');</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          1 :     setLoading(true, force: true);</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          3 :     final result = await this.getTVSeriesRecommendations.execute(id);</span></a>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          1 :     result.fold(</span></a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          1 :       (failure) {</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          2 :         setError(failure.message, force: true);</span></a>
+<a name="22"><span class="lineNum">      22 </span>            :       },</a>
+<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          1 :       (tvSeriesData) {</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          1 :         update(tvSeriesData, force: true);</span></a>
+<a name="25"><span class="lineNum">      25 </span>            :       },</a>
+<a name="26"><span class="lineNum">      26 </span>            :     );</a>
+<a name="27"><span class="lineNum">      27 </span>            :   }</a>
+<a name="28"><span class="lineNum">      28 </span>            : }</a>
 </pre>
       </td>
     </tr>

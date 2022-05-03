@@ -28,6 +28,10 @@ import 'package:ditonton/domain/usecases/save_watchlist.dart';
 import 'package:ditonton/domain/usecases/search_movies.dart';
 import 'package:ditonton/domain/usecases/search_tvseries.dart';
 import 'package:ditonton/domain/usecases/write_watchlist_tvseries.dart';
+import 'package:ditonton/presentation/bloc/now_playing_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/search_bloc.dart';
+import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
@@ -101,6 +105,12 @@ Future<void> init() async {
   ));
   Get.put(TVSeriesSearchStore(searchTVSeries: Get.find()));
   Get.put(TVSeriesRecommendationsStore(getTVSeriesRecommendations: Get.find()));
+
+  // bloc
+  locator.registerFactory(() => SearchBloc(locator()));
+  locator.registerFactory(() => NowPlayingMoviesBloc(locator()));
+  locator.registerFactory(() => PopularMovieBloc(locator()));
+  locator.registerFactory(() => TopRatedMovieBloc(locator()));
 
   // provider
   locator.registerFactory(
