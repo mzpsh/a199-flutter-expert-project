@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:ditonton/common/network_info.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
@@ -44,16 +46,38 @@ import 'package:ditonton/presentation/bloc/tv_series_search_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_series_watchlist_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_series_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_movie_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:sembast/sembast.dart';
 
 final locator = GetIt.instance;
 
+Future<IOClient> getGlobalContextedIoClient() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final sslCert = await rootBundle.load('assets/certificates/certificate.cer');
+
+  SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
+  securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
+
+  HttpClient client = HttpClient(context: securityContext);
+  client.badCertificateCallback =
+      (X509Certificate cert, String host, int port) => false;
+
+  IOClient ioClient = IOClient(client);
+  return ioClient;
+}
+
 /// Submission 1108243 Fix
 /// Make the init asynchronous
 Future<void> init() async {
+  // SSL pinning
+  final http.Client ioClient = await getGlobalContextedIoClient();
+
   // database helper
   Get.put(StoreRef.main());
   final dbHelper = SembastDatabaseHelper();
@@ -64,7 +88,7 @@ Future<void> init() async {
   Get.put<NetworkInfo>(NetworkInfoImpl(Get.find()));
 
   // tv series external
-  Get.put<http.Client>(http.Client());
+  Get.put<http.Client>(ioClient);
 
   // tv series data source
   Get.put<TVSeriesRemoteDataSource>(TVSeriesRemoteDataSourceImpl(
@@ -141,7 +165,7 @@ Future<void> init() async {
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(client: Get.find()));
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
@@ -152,6 +176,6 @@ Future<void> init() async {
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => ioClient);
   locator.registerLazySingleton(() => DataConnectionChecker());
 }

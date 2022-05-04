@@ -8,6 +8,7 @@ import 'package:ditonton/presentation/bloc/now_airing_tv_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/now_playing_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/popular_tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/search_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/top_rated_tv_series_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_series_detail_bloc.dart';
@@ -16,7 +17,6 @@ import 'package:ditonton/presentation/bloc/tv_series_search_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_series_watchlist_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv_series_watchlist_status_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist_movie_bloc.dart';
-import 'package:ditonton/presentation/bloc/search_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
@@ -30,12 +30,15 @@ import 'package:ditonton/presentation/pages/tvseries_detail_page.dart';
 import 'package:ditonton/presentation/pages/tvseries_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tvseries_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await di.init();
   runApp(MyApp());
 }

@@ -1,11 +1,8 @@
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/tvseries.dart';
 import 'package:ditonton/presentation/bloc/tv_series_search_bloc.dart';
 import 'package:ditonton/presentation/widgets/tvseries_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_triple/flutter_triple.dart';
-import 'package:get/get.dart';
 
 class SearchTVSeriesPage extends StatelessWidget {
   static const ROUTE_NAME = '/search-tvseries';

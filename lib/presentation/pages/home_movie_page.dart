@@ -86,7 +86,9 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         title: Text('Ditonton'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              // FirebaseCrashlytics.instance.crash();
+
               Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
