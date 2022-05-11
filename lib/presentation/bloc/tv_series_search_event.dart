@@ -14,3 +14,5 @@ class OnQueryChangedTvSeriesSearch extends TvSeriesSearchEvent {
   @override
   List<Object> get props => [query];
 }
+
+class OnQueryChangedTvSeriesReset extends TvSeriesSearchEvent {}

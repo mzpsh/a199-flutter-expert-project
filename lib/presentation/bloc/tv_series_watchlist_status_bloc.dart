@@ -17,21 +17,19 @@ class TvSeriesWatchlistStatusBloc
   }) : super(TvSeriesWatchlistStatusLoading()) {
     on<OnCheckTvSeriesWatchlistStatus>((event, emit) async {
       emit(TvSeriesWatchlistStatusLoading());
-
       final tvSeries = event.tvSeries;
       final list = await readWatchlistTVSeries.execute();
 
-      final filteredList = list.map((element) {
-        if (element.id == tvSeries.id) {
-          return element;
-        }
-      });
+      // Submission 1122703 Fix
+      bool inList = false;
 
-      if (filteredList.length == 1) {
-        emit(TvSeriesWatchlistStatusIsIn(true));
-      } else {
-        emit(TvSeriesWatchlistStatusIsIn(false));
+      for (TVSeries tvInList in list) {
+        if (tvSeries.id == tvInList.id) {
+          inList = true;
+        }
       }
+
+      emit(TvSeriesWatchlistStatusIsIn(inList));
     });
 
     on<OnToggleTvSeriesWatchlistStatus>((event, emit) async {

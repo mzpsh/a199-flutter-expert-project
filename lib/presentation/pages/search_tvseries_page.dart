@@ -10,6 +10,7 @@ class SearchTVSeriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<TvSeriesSearchBloc>().add(OnQueryChangedTvSeriesReset());
     return Scaffold(
       appBar: AppBar(title: Text('Search TV Series')),
       body: Padding(
@@ -46,6 +47,8 @@ class SearchTVSeriesPage extends StatelessWidget {
                             TVSeriesCard(state.result[index]));
                   } else if (state is TvSeriesSearchLoading) {
                     return Center(child: CircularProgressIndicator());
+                  } else if (state is TvSeriesSearchEmpty) {
+                    return Center(child: Text('Type the search term...'));
                   } else {
                     return Center(child: Text('Error'));
                   }

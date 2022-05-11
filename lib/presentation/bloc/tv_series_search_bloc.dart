@@ -9,7 +9,7 @@ part 'tv_series_search_state.dart';
 class TvSeriesSearchBloc
     extends Bloc<TvSeriesSearchEvent, TvSeriesSearchState> {
   final SearchTVSeries searchTVSeries;
-  TvSeriesSearchBloc(this.searchTVSeries) : super(TvSeriesSearchLoading()) {
+  TvSeriesSearchBloc(this.searchTVSeries) : super(TvSeriesSearchEmpty()) {
     on<OnQueryChangedTvSeriesSearch>((event, emit) async {
       emit(TvSeriesSearchLoading());
 
@@ -23,6 +23,9 @@ class TvSeriesSearchBloc
           emit(TvSeriesSearchHasData(data));
         },
       );
+    });
+    on<OnQueryChangedTvSeriesReset>((event, emit) async {
+      emit(TvSeriesSearchEmpty());
     });
   }
 }
