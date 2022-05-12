@@ -20,8 +20,8 @@ void main() {
     bloc = TvSeriesSearchBloc(usecase);
   });
   group('TvSeriesSearchBloc', () {
-    test('initial state should be loading.', () {
-      expect(bloc.state, TvSeriesSearchLoading());
+    test('initial state should be empty', () {
+      expect(bloc.state, TvSeriesSearchEmpty());
     });
 
     blocTest<TvSeriesSearchBloc, TvSeriesSearchState>(
