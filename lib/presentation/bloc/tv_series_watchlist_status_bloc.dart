@@ -38,13 +38,16 @@ class TvSeriesWatchlistStatusBloc
       final tvSeries = event.tvSeries;
       final list = await readWatchlistTVSeries.execute();
 
-      final filteredList = list.map((element) {
-        if (element.id == tvSeries.id) {
-          return element;
-        }
-      });
+      // Submission 1131713 Fix
+      bool inList = false;
 
-      if (filteredList.length == 1) {
+      for (TVSeries tvInList in list) {
+        if (tvSeries.id == tvInList.id) {
+          inList = true;
+        }
+      }
+
+      if (inList) {
         list.remove(tvSeries);
         await writeWatchlistTVSeries.execute(list);
         emit(TvSeriesWatchlistStatusIsIn(false));
